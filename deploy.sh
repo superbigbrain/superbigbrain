@@ -6,10 +6,10 @@ set -e
 printf "\033[0;32mDeploying updates to GitHub...\033[0m\n"
 
 # Build the project.
-hugo
+hugo --destination ../superbigbrain.github.io/
 
 # Go To Public folder
-cd public
+cd ../superbigbrain.github.io/
 
 # Add changes to git.
 git add .
