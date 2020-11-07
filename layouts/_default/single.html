@@ -28,6 +28,11 @@
 <content>
   {{ .Content }}
 </content>
+
+<div class="divider"></div>
+
+{{ partial "mailchimp.html" }}
+
 <p>
   {{ range (.GetTerms "tags") }}
   <a href="{{ .Permalink }}">#{{ .LinkTitle }}</a>
