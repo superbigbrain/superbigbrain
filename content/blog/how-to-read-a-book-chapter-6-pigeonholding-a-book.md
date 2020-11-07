@@ -1,7 +1,6 @@
 +++
 date = "2020-11-06"
 description = ""
-draft = true
 slug = "how-to-read-a-book-chapter-6-pigeonholing-a-book"
 title = "How to Read a Book, Chapter 6: Pigeonholing a Book"
 +++
