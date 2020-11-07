@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+<head>
+  <meta http-equiv="X-Clacks-Overhead" content="GNU Terry Pratchett" />
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Autocomplete in Depth | Bandit</title>
+<meta name="title" content="Autocomplete in Depth" />
+<meta name="description" content="Autocomplete is annoying.
+What types of searches can autocomplete help with?
+ When the query is a genre. When the query is a language. When the query is a cast member. When the query is a production company. When the query is a country. When the query is an IMDB ID. When the query is a keyword. When the query is a movie title.  What are the different approaches to autocomplete?" />
+<meta name="keywords" content="autocomplete,elasticsearch," />
+
+
+<meta property="og:title" content="Autocomplete in Depth" />
+<meta property="og:description" content="Autocomplete is annoying.
+What types of searches can autocomplete help with?
+ When the query is a genre. When the query is a language. When the query is a cast member. When the query is a production company. When the query is a country. When the query is an IMDB ID. When the query is a keyword. When the query is a movie title.  What are the different approaches to autocomplete?" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://example.org/autocomplete-in-depth/" />
+<meta property="article:published_time" content="2020-10-05T00:00:00+00:00" />
+<meta property="article:modified_time" content="2020-10-05T00:00:00+00:00" />
+
+
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Autocomplete in Depth"/>
+<meta name="twitter:description" content="Autocomplete is annoying.
+What types of searches can autocomplete help with?
+ When the query is a genre. When the query is a language. When the query is a cast member. When the query is a production company. When the query is a country. When the query is an IMDB ID. When the query is a keyword. When the query is a movie title.  What are the different approaches to autocomplete?"/>
+
+
+
+<meta itemprop="name" content="Autocomplete in Depth">
+<meta itemprop="description" content="Autocomplete is annoying.
+What types of searches can autocomplete help with?
+ When the query is a genre. When the query is a language. When the query is a cast member. When the query is a production company. When the query is a country. When the query is an IMDB ID. When the query is a keyword. When the query is a movie title.  What are the different approaches to autocomplete?">
+<meta itemprop="datePublished" content="2020-10-05T00:00:00+00:00" />
+<meta itemprop="dateModified" content="2020-10-05T00:00:00+00:00" />
+<meta itemprop="wordCount" content="318">
+
+
+
+<meta itemprop="keywords" content="autocomplete,elasticsearch," />
+
+<meta name="referrer" content="no-referrer-when-downgrade" />
+
+  <style>
+  body {
+    font-family: Verdana, sans-serif;
+    margin: auto;
+    padding: 20px;
+    max-width: 720px;
+    text-align: left;
+    background-color: #fff;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    line-height: 1.5;
+    color: #444;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  strong,
+  b {
+    color: #222;
+  }
+
+  a {
+    color: #3273dc;
+     
+  }
+
+  .title {
+    text-decoration: none;
+    border: 0;
+  }
+
+  .title span {
+    font-weight: 400;
+  }
+
+  nav a {
+    margin-right: 10px;
+  }
+
+  textarea {
+    width: 100%;
+    font-size: 16px;
+  }
+
+  input {
+    font-size: 16px;
+  }
+
+  content {
+    line-height: 1.6;
+  }
+
+  table {
+    width: 100%;
+  }
+
+  img {
+    max-width: 100%;
+  }
+
+  code {
+    padding: 2px 5px;
+    position: relative;
+    background-color: #fff;
+    font-family: 'Source Code Pro', monospace;
+  }
+
+  pre code {
+    color: #222;
+    display: block;
+    font-size: 14px;
+    padding: 20px;
+    overflow-x: scroll;
+  }
+
+  blockquote {
+    background-color: #F3F4F5;
+    color: #222;
+    margin: 0;
+    margin-bottom: 1rem;
+    padding: 1rem 2rem;
+    font-style: italic;
+  }
+
+  blockquote em {
+    font-style: normal;
+  }
+
+  footer {
+    padding: 25px;
+    text-align: center;
+  }
+
+  .helptext {
+    color: #777;
+    font-size: small;
+  }
+
+  .errorlist {
+    color: #eba613;
+    font-size: small;
+  }
+
+   
+  ul.blog-posts {
+    list-style-type: none;
+    padding: unset;
+  }
+
+  ul.blog-posts li {
+    display: flex;
+  }
+
+  ul.blog-posts li span {
+    flex: 0 0 130px;
+  }
+
+  ul.blog-posts li a:visited {
+    color: #8b6fcb;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    body {
+      background-color: #333;
+      color: #ddd;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    strong,
+    b {
+      color: #eee;
+    }
+
+    a {
+      color: #8cc2dd;
+    }
+
+    code {
+      background-color: #777;
+    }
+
+    pre code {
+      color: #ddd;
+    }
+
+    blockquote {
+      color: #ccc;
+    }
+
+    textarea,
+    input {
+      background-color: #252525;
+      color: #ddd;
+    }
+
+    .helptext {
+      color: #aaa;
+    }
+  }
+
+  .language-bash:before {
+    content: '$';
+    left: 5px;
+    position: absolute;
+  }
+
+  ::selection {
+    background: none;
+    background-color: #fef4ad;
+  }
+</style>
+
+<link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro&display=swap" rel="stylesheet">
+</head>
+
+<body>
+  <header><a href="/" class="title">
+  <h2>Bandit</h2>
+</a>
+<nav><a href="/">Home</a>
+<a href="/blog">Blog</a>
+<a href="/guides/">Guides</a></nav>
+</header>
+  <main>
+
+<h1>Autocomplete in Depth</h1>
+<p>
+  
+  <i>Draft &mdash;</i>
+  
+  
+  <i>
+    
+    <time datetime='2020-10-05' pubdate>
+      October 5, 2020
+    </time>
+  </i>
+
+  
+</p>
+
+<content>
+  <p>Autocomplete is annoying.</p>
+<p>What types of searches can autocomplete help with?</p>
+<ul>
+<li>When the query is a genre.</li>
+<li>When the query is a language.</li>
+<li>When the query is a cast member.</li>
+<li>When the query is a production company.</li>
+<li>When the query is a country.</li>
+<li>When the query is an IMDB ID.</li>
+<li>When the query is a keyword.</li>
+<li>When the query is a movie title.</li>
+</ul>
+<p>What are the different approaches to autocomplete?</p>
+<ul>
+<li>Prefix Query</li>
+<li>Edge N-Grams</li>
+<li>Completion Suggester</li>
+</ul>
+<p>What are the pros and cons of each approach to autocomplete?</p>
+<p>Where does boosting come into play in autocomplete?</p>
+<p>How can we boost exact matches over partial matches?</p>
+<p>How can we boost phrase matches over cross-field matches?</p>
+<p>What is the size of the index if we do in-line edge n-grams instead of
+extracting genres into a separate index?</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-json" data-lang="json">[
+    { <span style="color:#000080">&#34;name&#34;</span>: <span style="color:#d14">&#34;Action&#34;</span> },
+    { <span style="color:#000080">&#34;name&#34;</span>: <span style="color:#d14">&#34;Adventure&#34;</span> },
+    { <span style="color:#000080">&#34;name&#34;</span>: <span style="color:#d14">&#34;Animation&#34;</span> },
+    { <span style="color:#000080">&#34;name&#34;</span>: <span style="color:#d14">&#34;Comedy&#34;</span> },
+    { <span style="color:#000080">&#34;name&#34;</span>: <span style="color:#d14">&#34;Crime&#34;</span> },
+    { <span style="color:#000080">&#34;name&#34;</span>: <span style="color:#d14">&#34;Documentary&#34;</span> },
+    { <span style="color:#000080">&#34;name&#34;</span>: <span style="color:#d14">&#34;Drama&#34;</span> },
+    { <span style="color:#000080">&#34;name&#34;</span>: <span style="color:#d14">&#34;Family&#34;</span> },
+    { <span style="color:#000080">&#34;name&#34;</span>: <span style="color:#d14">&#34;Fantasy&#34;</span> },
+    { <span style="color:#000080">&#34;name&#34;</span>: <span style="color:#d14">&#34;History&#34;</span> },
+    { <span style="color:#000080">&#34;name&#34;</span>: <span style="color:#d14">&#34;Horror&#34;</span> },
+    { <span style="color:#000080">&#34;name&#34;</span>: <span style="color:#d14">&#34;Music&#34;</span> },
+    { <span style="color:#000080">&#34;name&#34;</span>: <span style="color:#d14">&#34;Mystery&#34;</span> },
+    { <span style="color:#000080">&#34;name&#34;</span>: <span style="color:#d14">&#34;Romance&#34;</span> },
+    { <span style="color:#000080">&#34;name&#34;</span>: <span style="color:#d14">&#34;Science Fiction&#34;</span> },
+    { <span style="color:#000080">&#34;name&#34;</span>: <span style="color:#d14">&#34;TV Movie&#34;</span> },
+    { <span style="color:#000080">&#34;name&#34;</span>: <span style="color:#d14">&#34;Thriller&#34;</span> },
+    { <span style="color:#000080">&#34;name&#34;</span>: <span style="color:#d14">&#34;War&#34;</span> },
+    { <span style="color:#000080">&#34;name&#34;</span>: <span style="color:#d14">&#34;Western&#34;</span> },
+]
+</code></pre></div><p>And here&rsquo;s what out keywords dataset looks like. The actual file for this
+dataset is ~50,000 lines, so I&rsquo;ve included only a handful here as an example and
+left out the rest for brevity:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-json" data-lang="json">[
+  { <span style="color:#000080">&#34;name&#34;</span>: <span style="color:#d14">&#34;#chriswatssconfessions&#34;</span> },
+  { <span style="color:#000080">&#34;name&#34;</span>: <span style="color:#d14">&#34;#criticschoiceawards&#34;</span> },
+  { <span style="color:#000080">&#34;name&#34;</span>: <span style="color:#d14">&#34;#eccofilm&#34;</span> },
+  { <span style="color:#000080">&#34;name&#34;</span>: <span style="color:#d14">&#34;#farrakhan&#34;</span> },
+  { <span style="color:#000080">&#34;name&#34;</span>: <span style="color:#d14">&#34;#finalclash&#34;</span> },
+  { <span style="color:#000080">&#34;name&#34;</span>: <span style="color:#d14">&#34;#marcosisnotahero&#34;</span> },
+  { <span style="color:#000080">&#34;name&#34;</span>: <span style="color:#d14">&#34;#ondas&#34;</span> },
+  { <span style="color:#000080">&#34;name&#34;</span>: <span style="color:#d14">&#34;#tubeclash&#34;</span> },
+  { <span style="color:#000080">&#34;name&#34;</span>: <span style="color:#d14">&#34;$700&#34;</span> },
+  { <span style="color:#000080">&#34;name&#34;</span>: <span style="color:#d14">&#34;0&#34;</span> },
+]
+</code></pre></div><p>The actual file for the keywords dataset is ~50,000 lines. We&rsquo;ve included a few
+here as an example but we&rsquo;ve left out must of the rows for brevity.</p>
+
+</content>
+<p>
+  
+  <a href="http://example.org/blog/autocomplete/">#autocomplete</a>
+  
+  <a href="http://example.org/blog/elasticsearch/">#elasticsearch</a>
+  
+</p>
+
+  </main>
+  <footer>
+</footer>
+
+    
+</body>
+
+</html>

@@ -1,0 +1,262 @@
+<style>
+  body {
+    font-family: -apple-system, Segoe UI, Roboto, Noto Sans, Ubuntu, Cantarell, Helvetica Neue, sans-serif;
+    font-size: 18px;
+    margin: auto;
+    padding: 20px;
+    max-width: 720px;
+    text-align: left;
+    background-color: #fff;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    line-height: 1.5;
+    color: #444;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  strong,
+  b {
+    color: #222;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    margin: 0;
+    margin-top: 2rem;
+  }
+
+  h1 {
+    font-size: 36px;
+  }
+
+  h2 {
+    font-size: 30px;
+  }
+
+  h3 {
+    font-size: 24px;
+  }
+
+  h4 {
+    font-size: 20px;
+  }
+  
+  h5 {
+    font-size: 18px;
+  }
+
+  h6 {
+    font-size: 16px;
+  }
+
+  a,
+  a:visited {
+    color: #3273DC;
+  }
+
+  .title {
+    text-decoration: none;
+    border: 0;
+  }
+
+  .title span {
+    font-weight: 400;
+  }
+
+  nav a {
+    margin-right: 10px;
+  }
+
+  textarea {
+    width: 100%;
+    font-size: 16px;
+  }
+
+  input {
+    font-size: 16px;
+  }
+
+  content {
+    line-height: 1.75;
+  }
+
+  table {
+    width: 100%;
+  }
+
+  img {
+    max-width: 100%;
+  }
+
+  code {
+    background-color: #F3F4F5;
+    font-family: 'Source Code Pro', monospace;
+    padding: 2px 5px;
+    position: relative;
+  }
+
+  pre code {
+    background-color: #FFF;
+    color: #222;
+    display: block;
+    font-size: 14px;
+    overflow-x: scroll;
+    padding: 20px;
+  }
+
+  blockquote {
+    background-color: #F3F4F5;
+    background-color: #FFF;
+    color: #222;
+    font-style: italic;
+    margin: 0;
+    margin-bottom: 1.5rem;
+    margin-top: 1.5rem;
+    padding: 1rem 2rem 1rem 5rem;
+    position: relative;
+  }
+
+  blockquote::before {
+    color: #222;
+    content: "\201C";
+    font-family: Arial;
+    font-size: 8rem;
+    left: 10px;
+    position: absolute;
+    top: -40px;
+  }
+
+  blockquote em {
+    font-style: normal;
+  }
+
+  footer {
+    padding: 25px;
+    text-align: center;
+  }
+
+  .helptext {
+    color: #777;
+    font-size: small;
+  }
+
+  .errorlist {
+    color: #eba613;
+    font-size: small;
+  }
+
+  /* blog posts */
+  ul.blog-posts {
+    list-style-type: none;
+    padding: unset;
+  }
+
+  ul.blog-posts li {
+    display: flex;
+  }
+
+  ul.blog-posts li span {
+    flex: 0 0 130px;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    body {
+      background-color: #333;
+      color: #ddd;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    strong,
+    b {
+      color: #eee;
+    }
+
+    a {
+      color: #8cc2dd;
+    }
+
+    code {
+      background-color: #777;
+    }
+
+    pre code {
+      color: #ddd;
+    }
+
+    blockquote {
+      color: #ccc;
+    }
+
+    textarea,
+    input {
+      background-color: #252525;
+      color: #ddd;
+    }
+
+    .helptext {
+      color: #aaa;
+    }
+  }
+
+  .language-bash:before {
+    content: '$';
+    left: 5px;
+    position: absolute;
+  }
+
+  ::selection {
+    background: none;
+    background-color: #fef4ad;
+  }
+
+  .alert {
+    background-color: #F3F4F5;
+    border: 0;
+    margin-bottom: 1rem;
+    padding: 1rem;
+  }
+
+  .alert p:first-child {
+    margin-top: 0;
+  }
+
+  .alert p:last-child {
+    margin-bottom: 0;
+  }
+
+  .alert-danger {
+    border-left: 5px solid #E84118;
+  }
+
+  .alert-info {
+    border-left: 5px solid #0097E6;
+  }
+
+  .alert-warning {
+    border-left: 5px solid #FBC531;
+  }
+
+  .bandit .katex-display {
+    margin: 2rem 0;
+  }
+</style>
+
+<link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro&display=swap" rel="stylesheet" />
+
+{{ if .Params.katex}}
+<link href="/katex/katex.min.css" rel="stylesheet" />
+{{ end }}

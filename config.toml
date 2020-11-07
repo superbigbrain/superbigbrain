@@ -1,0 +1,20 @@
+author = "James Brewer"
+baseURL = "http://superbigbrain.com/"
+# Generate a nice robots.txt for SEO
+enableRobotsTXT = true
+languageCode = "en-us"
+theme = "hugo-bearblog"
+title = "Big Brain Ideas"
+
+[markup.goldmark.renderer]
+unsafe = true
+
+[markup.highlight]
+style = "github"
+
+[params]
+hideMadeWithLine = true
+
+[permalinks]
+blog = "/:slug/"
+tags = "/tag/:slug"

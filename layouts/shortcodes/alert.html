@@ -1,0 +1,11 @@
+<aside class="alert alert-{{ .Get 0 }}">
+{{ if .Get 1 }}
+<b>{{ .Get 1 }}</b>
+{{ else }}
+    {{ if eq (.Get 0) "danger" }}<b>Danger</b>{{ end }}
+    {{ if eq (.Get 0) "info" }}<b>Info</b>{{ end }}
+    {{ if eq (.Get 0) "warning" }}<b>Warning</b>{{ end }}
+{{ end }}
+
+{{ .Inner }}
+</aside>
